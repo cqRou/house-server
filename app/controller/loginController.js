@@ -1,8 +1,8 @@
 'use strict';
 
 const Controller = require('../core/baseController');
-
-class LoginController extends Controller {
+const { SUCCESS, ERROR } = require('../public/common');
+class UserController extends Controller {
   // 查询所有的数据
   async getUserInfos() {
     const { ctx, app } = this;
@@ -22,8 +22,14 @@ class LoginController extends Controller {
         password,
       },
     });
-    console.log(userInfo);
-    ctx.body = userInfo;
+    // const permissionsList = await app.mysql.select('permission', {
+    //   where: {
+    //     username: userInfo[0].username,
+    //   },
+    // });
+    // userInfo.permissionsList = permissionsList;
+    console.log(SUCCESS(userInfo));
+    ctx.body = SUCCESS(userInfo);
   }
 
   // 插入数据
@@ -64,6 +70,9 @@ class LoginController extends Controller {
     console.log(affectedRows);
     ctx.body = affectedRows;
   }
+
+  // 万能写法
+  // const results = await this.app.mysql.query('update posts set hits = (hits + ?) where id = ?', [1, postId]);
 }
 
-module.exports = LoginController;
+module.exports = UserController;
