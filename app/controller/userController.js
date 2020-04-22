@@ -1,6 +1,7 @@
 'use strict';
 
 const Controller = require('../core/baseController');
+const { SUCCESS, ERROR } = require('../public/common');
 
 class UserController extends Controller {
 
@@ -17,32 +18,47 @@ class UserController extends Controller {
   }
 
 
-  async create() {
+  async addUser() {
     const ctx = this.ctx;
+    const { username, password, roleId, nickname} = ctx.request.body;
     const user = await ctx.model.User.create({
-      username: 'xc',
-      password: '123456',
-      address: '舟山',
-      role_id: 1,
-      telephone: 136166000000,
-      auth_list: null,
-      role_name: '管理员',
+      username,
+      password,
+      address: '',
+      roleId,
+      nickname,
+      crtTm: new Date(),
+      crtBy: 'admin',
+      updTm: new Date(),
+      updBy: 'admin',
       edit_flag: 0,
     });
-    ctx.status = 201;
-    ctx.body = user;
+    ctx.body = SUCCESS(user);
   }
 
-  async update() {
+  async updateUser() {
     const ctx = this.ctx;
-    const id = 106;
-    const user = await ctx.model.User.findByPk(id);
-    if (!user) {
-      ctx.status = 404;
-      return;
-    }
-    await user.update({ name: '李四', age: 43 });
-    ctx.body = user;
+    const { id, username, password, roleId, nickname , editFlag} = ctx.request.body;
+    console.log(editFlag)
+    const user = await ctx.model.User.update({ username, password, roleId, nickname, editFlag}, {
+      where: {
+        id
+      }
+    });
+    ctx.body = SUCCESS(user);
+  }
+
+  // 查询用户列表
+  async getUserList() {
+    console.log('--------');
+    const ctx = this.ctx;
+    // const { username, password } = ctx.request.body;
+    const list = await ctx.model.User.findAll({
+      // where: {
+      //   editFlag:'2'
+      // }
+    });
+    ctx.body = SUCCESS(list);
   }
 
   // async destroy() {

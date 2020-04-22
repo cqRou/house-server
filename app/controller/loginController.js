@@ -11,12 +11,24 @@ class UserController extends Controller {
     ctx.body = res;
   }
 
+  async index() {
+    const ctx = this.ctx;
+    ctx.body = await ctx.model.User.findAll({ limit: 10, offset: 0, order: [[ 'id', 'desc' ]] });
+  }
+
   // 按条件查询
   async getUserInfo() {
     console.log('--------');
-    const { ctx, app } = this;
+    const ctx = this.ctx;
     const { username, password } = ctx.request.body;
-    const userInfo = await app.mysql.select('sys_user', {
+    // ctx.body = await ctx.model.User.findAll({
+    //   where: {
+    //     username,
+    //     password,
+    //   },
+    //   limit: 10, offset: 0, order: [[ 'id', 'desc' ]],
+    // });
+    const userInfo = await ctx.model.User.findAll({
       where: {
         username,
         password,

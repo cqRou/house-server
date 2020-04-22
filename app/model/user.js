@@ -1,4 +1,3 @@
-
 'use strict';
 
 module.exports = app => {
@@ -8,11 +7,15 @@ module.exports = app => {
     id: { type: INTEGER, primaryKey: true, autoIncrement: true },
     username: STRING,
     password: STRING,
+    nickname: STRING,
     address: STRING,
-    roleId: STRING,
+    email: STRING,
+    roleId: INTEGER,
     crtTm: DATE,
-    roleId: STRING,
-    editFlag: INTEGER,
+    crtBy: STRING,
+    updTm: DATE,
+    updBy: STRING,
+    editFlag: STRING,
   }, {
     freezeTableName: true,
     tableName: 'sys_user',
