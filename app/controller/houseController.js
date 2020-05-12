@@ -8,7 +8,14 @@ class houseController extends Controller {
   async getHouseList() {
     console.log('--------');
     const ctx = this.ctx;
-    // const { username, password } = ctx.request.body;
+    const list = await ctx.model.House.findAll({
+    });
+    console.log(SUCCESS(list));
+    ctx.body = SUCCESS(list);
+  }
+  async getAllHouse() {
+    console.log('gjhghjghjgjhgjh');
+    const ctx = this.ctx;
     const list = await ctx.model.House.findAll({
     });
     console.log(SUCCESS(list));
@@ -44,7 +51,7 @@ class houseController extends Controller {
     const ctx = this.ctx;
     const { id, houseName, city, district, street, area, houseType, orientation, payment, subway, rentType,
       isRent, houseAge, editFlag} = ctx.request.body;
-    const house = await ctx.model.User.update({ houseName, city, district, street, area, houseType, orientation, payment, subway, rentType,
+    const house = await ctx.model.House.update({ houseName, city, district, street, area, houseType, orientation, payment, subway, rentType,
       isRent, houseAge, editFlag}, {
       where: {
         id

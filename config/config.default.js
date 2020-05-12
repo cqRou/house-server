@@ -77,7 +77,7 @@ module.exports = appInfo => {
     port: 3306,
     database: 'example', // 数据库民
     username: 'root', // 数据库的用户名
-    password: '123456', //
+    password: '844086765wwq.', //
   };
   // add your user config here
   const userConfig = {

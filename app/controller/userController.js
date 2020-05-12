@@ -47,6 +47,7 @@ class UserController extends Controller {
     });
     ctx.body = SUCCESS(user);
   }
+  
 
   // 查询用户列表
   async getUserList() {
@@ -59,6 +60,19 @@ class UserController extends Controller {
       // }
     });
     ctx.body = SUCCESS(list);
+  }
+
+  // 按条件查询
+  async getUserInfo() {
+    const ctx = this.ctx;
+    const { username } = ctx.request.body;
+    const userInfo = await ctx.model.User.findAll({
+      where: {
+        username,
+      },
+    });
+    console.log(SUCCESS(userInfo));
+    ctx.body = SUCCESS(userInfo);
   }
 
   // async destroy() {
