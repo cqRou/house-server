@@ -37,4 +37,8 @@ module.exports = app => {
   router.get('/payment/list', controller.paymentController.getPaymentList);
   router.post('/payment/addPayment', controller.paymentController.addPayment);
   router.post('/payment/updatePayment', controller.paymentController.updatePayment);
+  //info
+  router.get('/info/list', controller.infoController.getInfoList);
+  router.post('/info/addInfo', controller.infoController.addInfo);
+  router.post('/info/updateInfo', controller.infoController.updateInfo);
 };
