@@ -6,25 +6,36 @@ const { SUCCESS, ERROR } = require('../public/common');
 class houseController extends Controller {
   // 查询角色列表
   async getHouseList() {
-    console.log('--------');
     const ctx = this.ctx;
     const list = await ctx.model.House.findAll({
+    });
+    console.log(SUCCESS(list));
+    const count = await ctx.model.House.count({})
+    ctx.body = SUCCESS({list, totalCount:count});
+  }
+  async getHouseById() {
+    const ctx = this.ctx;
+    const {id} = ctx.request.body;
+    const list = await ctx.model.House.findAll({
+      where: {
+        id
+      }
     });
     console.log(SUCCESS(list));
     ctx.body = SUCCESS(list);
   }
   async getAllHouse() {
-    console.log('gjhghjghjgjhgjh');
     const ctx = this.ctx;
     const list = await ctx.model.House.findAll({
     });
     console.log(SUCCESS(list));
-    ctx.body = SUCCESS(list);
+    const count = await ctx.model.House.count({})
+    ctx.body = SUCCESS({list, totalCount:count});
   }
   async addHouse() {
     const ctx = this.ctx;
     const { houseName, city, district, street, area, houseType, orientation, payment, subway, rentType,
-      isRent, houseAge} = ctx.request.body;
+      isRent, houseAge, houseDescription,interested} = ctx.request.body;
     const house = await ctx.model.House.create({
       houseName,
       city, 
@@ -38,6 +49,8 @@ class houseController extends Controller {
       rentType,
       isRent, 
       houseAge,
+      houseDescription,
+      interested,
       crtTm: new Date(),
       crtBy: 'admin',
       updTm: new Date(),
@@ -50,9 +63,9 @@ class houseController extends Controller {
   async updateHouse() {
     const ctx = this.ctx;
     const { id, houseName, city, district, street, area, houseType, orientation, payment, subway, rentType,
-      isRent, houseAge, editFlag} = ctx.request.body;
+      isRent, houseAge, houseDescription,interested, editFlag} = ctx.request.body;
     const house = await ctx.model.House.update({ houseName, city, district, street, area, houseType, orientation, payment, subway, rentType,
-      isRent, houseAge, editFlag}, {
+      isRent, houseAge,houseDescription,interested, editFlag}, {
       where: {
         id
       }

@@ -1,10 +1,11 @@
 'use strict';
 
-const SUCCESS = data => {
+const SUCCESS = (data) => {
   return {
-    data,
+    ...data,
     code: 1000,
     result: 'success',
+    // totalCount:count || 0,
   };
 };
 

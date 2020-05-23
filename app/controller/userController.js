@@ -59,7 +59,8 @@ class UserController extends Controller {
       //   editFlag:'2'
       // }
     });
-    ctx.body = SUCCESS(list);
+    const count = await ctx.model.User.count({})
+    ctx.body = SUCCESS({list, totalCount:count});
   }
 
   // 按条件查询
@@ -74,6 +75,19 @@ class UserController extends Controller {
     console.log(SUCCESS(userInfo));
     ctx.body = SUCCESS(userInfo);
   }
+
+    // 按条件查询
+    async getUserName() {
+      const ctx = this.ctx;
+      const { id } = ctx.request.body;
+      const name = await ctx.model.User.findAll({
+        attributes: ['username'],
+        where: {
+          id,
+        },
+      });
+      ctx.body = SUCCESS(name);
+    }
 
   // async destroy() {
   //   const ctx = this.ctx;

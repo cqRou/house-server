@@ -9,18 +9,55 @@ class contractController extends Controller {
     console.log('--------');
     const ctx = this.ctx;
     // const { username, password } = ctx.request.body;
+    const count = await ctx.model.Contract.count({})
     const list = await ctx.model.Contract.findAll({
     });
     console.log(SUCCESS(list));
-    ctx.body = SUCCESS(list);
+    ctx.body = SUCCESS({list, totalCount:count});
+  }
+  async getContractListById() {
+    console.log('--------');
+    const ctx = this.ctx;
+    const { id, roleId } = ctx.request.body;
+    let count = 0
+    let list = []
+    console.log(roleId)
+    if(roleId == 2){
+      list = await ctx.model.Contract.findAll({
+        where: {
+          houseOwnerId: id
+        }
+      });
+      count = await ctx.model.Contract.count({
+        where: {
+          houseOwnerId: id
+        }
+      })
+    }else if(roleId == 3){
+      list = await ctx.model.Contract.findAll({
+        where: {
+          rentId: id
+        }
+      });
+      count = await ctx.model.Contract.count({
+        where: {
+          rentId: id
+        }
+      })
+    }
+    console.log(SUCCESS(list));
+    ctx.body = SUCCESS({list, totalCount:count});
   }
   async addContract() {
     const ctx = this.ctx;
-    const {houseId,rentId,houseOwnerId,rentTime,startTime,endTime} = ctx.request.body;
+    const {houseId,rentId,houseOwnerId,rentTime,startTime,endTime,houseName,houseOwnerName,rentName} = ctx.request.body;
     const contract = await ctx.model.Contract.create({
       houseId,
+      houseName,
       rentId,
+      rentName,
       houseOwnerId,
+      houseOwnerName,
       rentTime,
       startTime,
       endTime,
@@ -28,15 +65,15 @@ class contractController extends Controller {
       crtBy: 'admin',
       updTm: new Date(),
       updBy: 'admin',
-      edit_flag: 1,
+      editFlag: 1,
     });
-    ctx.body = SUCCESS(contract);
+    ctx.body = SUCCESS({});
   }
 
   async updateContract() {
     const ctx = this.ctx;
-    const { id, houseId,rentId,houseOwnerId,rentTime,startTime,endTime, editFlag} = ctx.request.body;
-    const contract = await ctx.model.Contract.update({ houseId,rentId,houseOwnerId,rentTime,startTime,endTime, editFlag}, {
+    const { id, houseId,rentId,houseOwnerId,rentTime,startTime,endTime, editFlag,houseName,houseOwnerName,rentName} = ctx.request.body;
+    const contract = await ctx.model.Contract.update({ houseId,rentId,houseOwnerId,rentTime,startTime,endTime, houseName,houseOwnerName,rentName,editFlag}, {
       where: {
         id
       }

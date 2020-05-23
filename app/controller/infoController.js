@@ -8,37 +8,47 @@ class infoController extends Controller {
   async getInfoList() {
     console.log('--------');
     const ctx = this.ctx;
+    const {id} = ctx.request.body;
     const list = await ctx.model.Info.findAll({
+      where: {
+        houseOwnerId:id
+      }
     });
-    ctx.body = SUCCESS(list);
+    const count = await ctx.model.Info.count({})
+    ctx.body = SUCCESS({list, totalCount:count});
   }
   async addInfo() {
     const ctx = this.ctx;
-    const {rentId,houseOwnerId,msg} = ctx.request.body;
-    const info = await ctx.model.Info.create({
+    console.log('--------',ctx.request.body);
+    const {rentId,houseOwnerId,msg,rentName,houseOwnerName,houseId,houseName} = ctx.request.body;
+    const res = await ctx.model.Info.create({
       rentId,
-      rentName,
       houseOwnerId,
-      houseOwnerName,
       msg,
+      rentName,
+      houseOwnerName,
+      houseId,
+      houseName,
+      isSentPhone: 0,
+      isMakeContract:0,
       crtTm: new Date(),
       crtBy: 'admin',
       updTm: new Date(),
       updBy: 'admin',
       editFlag: 1,
     });
-    ctx.body = SUCCESS(info);
+    ctx.body = SUCCESS({});
   }
 
   async updateInfo() {
     const ctx = this.ctx;
-    const { id,rentId,rentName,houseOwnerId,houseOwnerName,msg,isSentPhone,isMakeContract,editFlag} = ctx.request.body;
-    const info = await ctx.model.Payment.update({rentId,rentName,houseOwnerId,houseOwnerName,msg,isSentPhone,isMakeContract,editFlag}, {
+    const { id,rentId,rentName,houseOwnerId,houseOwnerName,msg,isSentPhone,isMakeContract,houseId,houseName,editFlag} = ctx.request.body;
+    const res = await ctx.model.Info.update({rentId,rentName,houseOwnerId,houseOwnerName,msg,isSentPhone,isMakeContract,houseId,houseName,editFlag}, {
       where: {
         id
       }
     });
-    ctx.body = SUCCESS(info);
+    ctx.body = SUCCESS({});
   }
 
 }

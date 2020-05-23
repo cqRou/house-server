@@ -11,15 +11,19 @@ class paymentController extends Controller {
     const list = await ctx.model.Payment.findAll({
     });
     console.log(SUCCESS(list));
-    ctx.body = SUCCESS(list);
+    const count = await ctx.model.Payment.count({})
+    ctx.body = SUCCESS({list, totalCount:count});
   }
   async addPayment() {
     const ctx = this.ctx;
-    const {houseId,rentId,houseOwnerId,money} = ctx.request.body;
+    const {houseId,houseName,rentId,rentName,houseOwnerId,houseOwnerName,money} = ctx.request.body;
     const payment = await ctx.model.Payment.create({
       houseId,
+      houseName,
       rentId,
+      rentName,
       houseOwnerId,
+      houseOwnerName,
       money,
       isPay: 0,
       deposit: money*0.3,
@@ -29,13 +33,13 @@ class paymentController extends Controller {
       updBy: 'admin',
       editFlag: 1,
     });
-    ctx.body = SUCCESS(payment);
+    ctx.body = SUCCESS({});
   }
 
   async updatePayment() {
     const ctx = this.ctx;
     const { id,houseId,rentId,houseOwnerId,money,isPay,deposit,editFlag} = ctx.request.body;
-    const payment = await ctx.model.Payment.update({ houseId,rentId,houseOwnerId,money,isPay,deposit,editFlag}, {
+    const payment = await ctx.model.Payment.update({ houseId,houseName,rentId,rentName,houseOwnerId,houseOwnerName,money,isPay,deposit,editFlag}, {
       where: {
         id
       }

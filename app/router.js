@@ -21,6 +21,7 @@ module.exports = app => {
   router.post('/user/addUser', controller.userController.addUser);
   router.post('/user/updateUser', controller.userController.updateUser);
   router.post('/user/getInfo', controller.userController.getUserInfo);
+  router.post('/user/getUserName', controller.userController.getUserName);
   //role
   router.get('/role/getAllRoles', controller.roleController.getRoleList);
   //house
@@ -28,17 +29,19 @@ module.exports = app => {
   router.post('/house/getAllHouse', controller.houseController.getAllHouse);
   router.post('/house/addHouse', controller.houseController.addHouse);
   router.post('/house/updateHouse', controller.houseController.updateHouse);
+  router.post('/house/getHouseById', controller.houseController.getHouseById);
 
   //contract
   router.get('/contract/list', controller.contractController.getContractList);
   router.post('/contract/addContract', controller.contractController.addContract);
   router.post('/contract/updateContract', controller.contractController.updateContract);
+  router.post('/contract/getContractListById', controller.contractController.getContractListById);
   //payment
   router.get('/payment/list', controller.paymentController.getPaymentList);
   router.post('/payment/addPayment', controller.paymentController.addPayment);
   router.post('/payment/updatePayment', controller.paymentController.updatePayment);
   //info
-  router.get('/info/list', controller.infoController.getInfoList);
+  router.post('/info/list', controller.infoController.getInfoList);
   router.post('/info/addInfo', controller.infoController.addInfo);
   router.post('/info/updateInfo', controller.infoController.updateInfo);
 };

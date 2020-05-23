@@ -12,6 +12,8 @@ module.exports = app => {
     msg: STRING,
     isSentPhone: INTEGER,
     isMakeContract: INTEGER,
+    houseId: INTEGER,
+    houseName:STRING,
     crtTm: DATE,
     crtBy: STRING,
     updTm: DATE,
