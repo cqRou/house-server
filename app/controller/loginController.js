@@ -52,12 +52,12 @@ class UserController extends Controller {
       username: 'xc',
       password: '123456',
       address: '舟山',
-      role_id: 1,
+      roleId: 1,
       // crt_tm: '2020-03-04T16:00:00.000Z',
       telephone: 136166000000,
-      auth_list: null,
-      role_name: '管理员',
-      edit_flag: 0,
+      authList: null,
+      roleName: '管理员',
+      editFlag: 0,
     });
     // 一般使用res.affectedRows来判断sql语句是否执行成功
     console.log(affectedRows);

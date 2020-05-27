@@ -38,7 +38,7 @@ class paymentController extends Controller {
 
   async updatePayment() {
     const ctx = this.ctx;
-    const { id,houseId,rentId,houseOwnerId,money,isPay,deposit,editFlag} = ctx.request.body;
+    const { id,houseId,houseName,rentId,rentName,houseOwnerId,houseOwnerName,money,isPay,deposit,editFlag} = ctx.request.body;
     const payment = await ctx.model.Payment.update({ houseId,houseName,rentId,rentName,houseOwnerId,houseOwnerName,money,isPay,deposit,editFlag}, {
       where: {
         id

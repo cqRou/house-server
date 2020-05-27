@@ -31,9 +31,9 @@ class UserController extends Controller {
       crtBy: 'admin',
       updTm: new Date(),
       updBy: 'admin',
-      edit_flag: 0,
+      editFlag: 1,
     });
-    ctx.body = SUCCESS(user);
+    ctx.body = SUCCESS({});
   }
 
   async updateUser() {
@@ -55,9 +55,9 @@ class UserController extends Controller {
     const ctx = this.ctx;
     // const { username, password } = ctx.request.body;
     const list = await ctx.model.User.findAll({
-      // where: {
-      //   editFlag:'2'
-      // }
+      where: {
+        editFlag:'1'
+      }
     });
     const count = await ctx.model.User.count({})
     ctx.body = SUCCESS({list, totalCount:count});

@@ -1,6 +1,7 @@
 'use strict';
 
 const Controller = require('../core/baseController');
+const { Op } = require("sequelize");
 const { SUCCESS, ERROR } = require('../public/common');
 
 class houseController extends Controller {
@@ -8,6 +9,9 @@ class houseController extends Controller {
   async getHouseList() {
     const ctx = this.ctx;
     const list = await ctx.model.House.findAll({
+      where: {
+        editFlag:'1'
+      }
     });
     console.log(SUCCESS(list));
     const count = await ctx.model.House.count({})
@@ -26,7 +30,20 @@ class houseController extends Controller {
   }
   async getAllHouse() {
     const ctx = this.ctx;
+    const {houseCity,houseDistrict, housePayment} = ctx.request.body;
     const list = await ctx.model.House.findAll({
+      where: {
+        city:{
+          [Op.like]: '%'+houseCity+'%'
+        },
+        district:{
+          [Op.like]: '%'+houseDistrict+'%'
+        },
+        payment:{
+          [Op.between]: housePayment
+        },
+        editFlag:'1'
+      }
     });
     console.log(SUCCESS(list));
     const count = await ctx.model.House.count({})
@@ -55,9 +72,11 @@ class houseController extends Controller {
       crtBy: 'admin',
       updTm: new Date(),
       updBy: 'admin',
-      edit_flag: 1,
+      houseOwnerId:10004,
+      houseOwnerName:'user',
+      editFlag: 1,
     });
-    ctx.body = SUCCESS(house);
+    ctx.body = SUCCESS({});
   }
 
   async updateHouse() {
