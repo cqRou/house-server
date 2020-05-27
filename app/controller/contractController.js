@@ -11,6 +11,9 @@ class contractController extends Controller {
     // const { username, password } = ctx.request.body;
     const count = await ctx.model.Contract.count({})
     const list = await ctx.model.Contract.findAll({
+      where: {
+        editFlag:'1'
+      }
     });
     console.log(SUCCESS(list));
     ctx.body = SUCCESS({list, totalCount:count});

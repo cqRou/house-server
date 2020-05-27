@@ -9,6 +9,9 @@ class paymentController extends Controller {
     console.log('--------');
     const ctx = this.ctx;
     const list = await ctx.model.Payment.findAll({
+      where: {
+        editFlag:'1'
+      }
     });
     console.log(SUCCESS(list));
     const count = await ctx.model.Payment.count({})

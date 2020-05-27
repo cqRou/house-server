@@ -40,8 +40,12 @@ class UserController extends Controller {
     //   },
     // });
     // userInfo.permissionsList = permissionsList;
-    console.log(SUCCESS(userInfo));
-    ctx.body = SUCCESS(userInfo);
+    console.log('userInfo-------',userInfo);
+    if(userInfo.length > 0){
+      ctx.body = SUCCESS({userInfo});
+    }else{
+      ctx.body = ERROR('账户名或者密码错误');
+    }
   }
 
   // 插入数据
